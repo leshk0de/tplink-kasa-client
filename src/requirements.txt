@@ -1,0 +1,6 @@
+tplink-cloud-api
+influxdb3-python
+google-cloud-secret-manager
+google-cloud-storage
+python-dotenv
+pandas
