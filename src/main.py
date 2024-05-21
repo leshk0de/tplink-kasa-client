@@ -6,7 +6,7 @@ import os
 from google.cloud import secretmanager
 from tplinkcloud import TPLinkDeviceManager
 from influxdb_client_3 import InfluxDBClient3, Point
-
+import pickle
 from dotenv import load_dotenv
 import asyncio
 import json
@@ -123,11 +123,12 @@ def pull_data(event, context):
 
 
 # Just for testing
-# Encode the JSON string using base64
-data_bytes = base64.b64encode(json.dumps({ "dummy": "data" }).encode('utf-8'))
+if not os.environ.get('K_SERVICE'):
+    # Encode the JSON string using base64
+    data_bytes = base64.b64encode(json.dumps({ "dummy": "data" }).encode('utf-8'))
 
-# Create the Pub/Sub message
-pubsub_message = {
-    "data": data_bytes.decode('utf-8')
-}
-pull_data(pubsub_message, "")
+    # Create the Pub/Sub message
+    pubsub_message = {
+        "data": data_bytes.decode('utf-8')
+    }
+    pull_data(pubsub_message, "")
